@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -164,6 +165,54 @@ fun MySwitch() {
 
     }
 }
+
+@Composable
+private fun RadioButtons() {
+
+    val radioButtons = remember {
+        mutableListOf(
+            ToggleableInfo(
+                isChecked = true,
+                text = "Photos"
+            ),ToggleableInfo(
+                isChecked = false,
+                text = "Videos"
+            ),ToggleableInfo(
+                isChecked = false,
+                text = "Audio"
+            ),
+        )
+    }
+
+    radioButtons.forEachIndexed { index, info ->
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .clickable {
+                    radioButtons.replaceAll {
+                        it.copy(
+                            isChecked = it.text == info.text
+                        )
+                    }
+                }
+                .padding(end = 16.dp)
+        ) {
+            RadioButton(
+                selected  = info.isChecked ,
+                onClick  = {
+                    radioButtons.replaceAll {
+                        it.copy(
+                            isChecked = it.text == info.text
+                        )
+                    }
+                }
+            )
+            Text(text = info.text)
+        }
+    }
+}
+
 @Composable
 fun Check() {
 
@@ -175,6 +224,8 @@ fun Check() {
         CheckBoxes()
         Spacer(modifier = Modifier.height(32.dp))
         MySwitch()
+        Spacer(modifier = Modifier.height(32.dp))
+        RadioButtons()
     }
 }
 
